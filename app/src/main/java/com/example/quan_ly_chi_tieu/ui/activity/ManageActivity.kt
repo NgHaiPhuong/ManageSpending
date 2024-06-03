@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quan_ly_chi_tieu.databinding.ActivityManageBinding
+import com.example.quan_ly_chi_tieu.presentation.main.MainActivity
 
 class ManageActivity : AppCompatActivity() {
     private lateinit var binding : ActivityManageBinding
