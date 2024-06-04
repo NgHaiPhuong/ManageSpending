@@ -1,26 +1,21 @@
 package com.example.quan_ly_chi_tieu.presentation.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat.recreate
 import androidx.core.view.GravityCompat
 import com.example.quan_ly_chi_tieu.R
-import com.example.quan_ly_chi_tieu.constant.DARK_THEME
 import com.example.quan_ly_chi_tieu.databinding.FragmentHomeBinding
-import com.example.quan_ly_chi_tieu.preference.MyPreferences
-import com.example.quan_ly_chi_tieu.ui.ChartActivity
-import com.example.quan_ly_chi_tieu.ui.InsertActivity
-import com.example.quan_ly_chi_tieu.ui.ManageActivity
-import com.example.quan_ly_chi_tieu.ui.SearchActivity
+import com.example.quan_ly_chi_tieu.db.database.MyDatabase
+import com.example.quan_ly_chi_tieu.model.Category
 
 class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var isFragmentRunning = false
+    private lateinit var myDatabase: MyDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,15 +35,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun handleEvent() {
-        binding.imgMenu.setOnClickListener {
+        binding.imgsetting.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
             } else {
                 binding.drawerLayout.openDrawer(GravityCompat.START)
             }
         }
-
-
     }
 
     private fun initData() {

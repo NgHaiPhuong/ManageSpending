@@ -1,159 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.MainActivity"
-    tools:openDrawer="start"
+    android:layout_width="match_parent"
+    tools:context=".presentation.home.HomeFragment"
     android:fitsSystemWindows="true"
-    android:background="#FFFFFF">
+    android:background="#DDDDDD">
+    <!-- tools:openDrawer="start" -->
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
-        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-        <RelativeLayout
-            android:id="@+id/n"
-            android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp">
+        <ImageView
+            android:id="@+id/imgcalendar"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/calendar"/>
+        <TextView
+            android:id="@+id/tvdate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3399FF">
-            <TextView
-                android:id="@+id/tvsumInfor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Hello"
-                android:textColor="@color/white"
-                android:textSize="15dp"
-                android:onClick="btnshowMain"/>
+            android:text="01/06/2024"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/imgcalendar"/>
+        <ImageView
+            android:id="@+id/imgsetting"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_settings"/>
+        <ImageView
+            android:id="@+id/imgadd"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/add"/>
 
-            <TextView
-                android:id="@+id/tvtongtien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvsumInfor"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:text="Hello"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvbalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="80dp"
+            android:layout_below="@id/imgcalendar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/money"/>
 
-            <TextView
-                android:id="@+id/tvsumchitieu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvtongtien"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Hello"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expand: "
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/tvbalance"
+            android:layout_margin="20dp"
+            android:textSize="@dimen/_15sdp"/>
+        <TextView
+            android:id="@+id/tvspend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/tv1"
+            android:layout_below="@id/tvbalance"
+            android:layout_margin="20dp"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/red"/>
 
-            <TextView
-                android:id="@+id/tvsumthunhap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvsumchitieu"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="15dp"
-                android:text="Hello"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income: "
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/tv1"
+            android:layout_marginStart="20dp"
+            android:textSize="@dimen/_15sdp"/>
+        <TextView
+            android:id="@+id/tvincome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/tv2"
+            android:layout_below="@id/tv1"
+            android:layout_marginStart="40dp"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/money"/>
 
-            <ImageView
-                android:id="@+id/imgMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_menu" />
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textStyle="bold"
+            android:layout_below="@id/tv2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="@dimen/_18sdp"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/budgetlayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvsumthunhap"
-                android:background="@drawable/search_bar">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/b"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngân sách:"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp"/>
-                    <TextView
-                        android:id="@+id/tvbudgetsum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hello"
-                        android:layout_toEndOf="@id/b"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"/>
-
-                    <ProgressBar
-                        android:id="@+id/sbPlayer"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/b"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp" />
-
-                    <TextView
-                        android:id="@+id/conlai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngân sách còn lại:"
-                        android:layout_below="@id/sbPlayer"
-                        android:layout_toStartOf="@id/tvbudgetconlai"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="15dp"/>
-                    <TextView
-                        android:id="@+id/tvbudgetconlai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hello"
-                        android:layout_below="@id/sbPlayer"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inforDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/n"/>
-
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tv3"
+            android:layout_margin="10dp"/>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvnodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NO DATA"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -161,11 +143,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:visibility="gone"
         app:menu = "@menu/menu_view"
         app:headerLayout="@layout/headerlayout"/>
 </androidx.drawerlayout.widget.DrawerLayout>
-
-
 
 
 
