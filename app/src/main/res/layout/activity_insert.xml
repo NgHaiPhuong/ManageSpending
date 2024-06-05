@@ -69,7 +69,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:onClick="btnShowOClock">
-
             <ImageView
                 android:id="@+id/imghour"
                 android:layout_width="30dp"
@@ -93,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="45dp"
                 android:layout_toEndOf="@id/text1"
                 android:text="00:00"
                 android:textColor="@color/black"
@@ -135,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="52dp"
                 android:layout_toEndOf="@id/text2"
                 android:hint="Nhập ghi chú"
                 android:inputType="text"
@@ -150,16 +149,6 @@
                 android:src="@drawable/ic_next" />
         </RelativeLayout>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imgsave"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        android:layout_margin="15dp"/>
 
     <View
         android:id="@+id/view_dim_background"
@@ -223,21 +212,33 @@
 
         <ImageView
             android:id="@+id/imgback"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:src = "@drawable/ic_arrow"
             android:layout_margin="15dp"
             android:layout_alignParentStart="true"
             android:onClick="showmain"/>
-        <ImageView
+
+        <TextView
+            android:id="@+id/imgsave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textSize="23sp"
+            android:text="Lưu"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgItem"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_below="@id/imgback"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:layout_marginBottom="10dp"
-            android:src = "@drawable/e"
-            android:onClick="showList"/>
+            android:onClick="showList"
+            android:src="@drawable/car"/>
 
         <TextView
             android:id="@+id/tvnumber"
@@ -251,8 +252,8 @@
             android:hint="0"
             android:inputType="number"
             android:padding="13dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"/>
 
@@ -264,9 +265,9 @@
             android:layout_alignParentEnd="true"
             android:textSize="16sp"
             android:hint = "0"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:layout_margin="10dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:visibility="gone"/>
     </RelativeLayout>
 

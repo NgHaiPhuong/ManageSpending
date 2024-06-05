@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".presentation.actitvity.MainActivity"
     xmlns:tools="http://schemas.android.com/tools">
@@ -13,11 +13,11 @@
         android:layout_height="match_parent" />
 
     <!-- MeowBottomNavigation được tham chiếu thông qua binding -->
-    <meow.bottomnavigation.MeowBottomNavigation
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mbn_circleColor="#ffffff"
+        app:mbn_circleColor="@color/money"
         app:mbn_backgroundBottomColor="#ffffff"
         app:mbn_countBackgroundColor="#ff6f00"
         app:mbn_countTextColor="#ffffff"
@@ -27,4 +27,4 @@
         app:mbn_selectedIconColor="#3c415e"
         app:mbn_shadowColor="#1f212121"
         app:layout_constraintBottom_toBottomOf="parent" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

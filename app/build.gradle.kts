@@ -107,7 +107,7 @@ dependencies {
     implementation ("com.android.support:design:26.1.0")
 
     // Meow Bottom Nav
-    implementation ("com.etebarian:meow-bottom-navigation:1.3.1")
+    implementation ("com.etebarian:meow-bottom-navigation:1.2.0")
 
     //Circle Image
     implementation ("de.hdodenhof:circleimageview:3.1.0")

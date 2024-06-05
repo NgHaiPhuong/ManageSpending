@@ -2,12 +2,13 @@ package com.example.quan_ly_chi_tieu.presentation.actitvity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.quan_ly_chi_tieu.R
 import com.example.quan_ly_chi_tieu.base.BaseActivity
 import com.example.quan_ly_chi_tieu.presentation.category.CategoryFragment
 import com.example.quan_ly_chi_tieu.presentation.chart.ChartFragment
 import com.example.quan_ly_chi_tieu.presentation.home.HomeFragment
-import meow.bottomnavigation.MeowBottomNavigation
+
 
 class MainActivity : BaseActivity() {
     private lateinit var bottomNavigation : MeowBottomNavigation
@@ -30,7 +31,7 @@ class MainActivity : BaseActivity() {
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_notactive))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.chart_noactive))
         bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.category_noactive))
-        bottomNavigation.show(0, true)
+        bottomNavigation.show(1, true)
 
         bottomNavigation.setOnShowListener { model ->
             when (model.id) {
