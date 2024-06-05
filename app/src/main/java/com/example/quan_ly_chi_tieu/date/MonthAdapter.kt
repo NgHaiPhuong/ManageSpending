@@ -1,4 +1,4 @@
-package com.example.quan_ly_chi_tieu.recyclerview
+package com.example.quan_ly_chi_tieu.date
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quan_ly_chi_tieu.R
 
-class recyclerview_month : RecyclerView.Adapter<MyViewHolder>() {
-    val monthList = listOf<String>("Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5",
+class MonthAdapter : RecyclerView.Adapter<MyViewHolder>() {
+    val monthList = listOf("Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5",
         "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

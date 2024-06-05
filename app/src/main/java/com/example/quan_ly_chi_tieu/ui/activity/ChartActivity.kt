@@ -1,4 +1,4 @@
-package com.example.quan_ly_chi_tieu.ui
+package com.example.quan_ly_chi_tieu.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,9 +10,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quan_ly_chi_tieu.databinding.ActivityChartBinding
-import com.example.quan_ly_chi_tieu.presentation.main.MainActivity
-import com.example.quan_ly_chi_tieu.recyclerview.recyclerview_month
-import com.example.quan_ly_chi_tieu.recyclerview.recyclerview_year
+import com.example.quan_ly_chi_tieu.date.MonthAdapter
+import com.example.quan_ly_chi_tieu.date.YearAdapter
+import com.example.quan_ly_chi_tieu.presentation.actitvity.MainActivity
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -50,11 +50,12 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
             binding.layoutdate.visibility = View.GONE
             binding.layoutPL.visibility = View.GONE
         }
+
         binding.recyclermonth.layoutManager = LinearLayoutManager(this)
-        binding.recyclermonth.adapter = recyclerview_month()
+        binding.recyclermonth.adapter = MonthAdapter()
 
         binding.recycleryear.layoutManager = LinearLayoutManager(this)
-        binding.recycleryear.adapter = recyclerview_year()
+        binding.recycleryear.adapter = YearAdapter()
         /*binding.root.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 if ((binding.layoutPL.visibility == View.VISIBLE ||

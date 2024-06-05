@@ -7,7 +7,7 @@ import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quan_ly_chi_tieu.R
-import com.example.quan_ly_chi_tieu.presentation.main.MainActivity
+import com.example.quan_ly_chi_tieu.presentation.actitvity.MainActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

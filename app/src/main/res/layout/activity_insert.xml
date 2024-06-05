@@ -5,11 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.InsertActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    tools:context=".presentation.actitvity.InsertActivity"
+    android:background="#DDDDDD">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -221,7 +218,7 @@
         android:id="@+id/rev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3399FF"
+        android:background="@color/cardview"
         tools:ignore="MissingConstraints">
 
         <ImageView

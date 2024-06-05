@@ -8,8 +8,8 @@
     android:layout_width="match_parent"
     tools:context=".presentation.home.HomeFragment"
     android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     android:background="#DDDDDD">
-    <!-- tools:openDrawer="start" -->
 
     <FrameLayout
         android:id="@+id/container"
@@ -125,17 +125,20 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/tv3"
             android:layout_margin="10dp"/>
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvnodata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NO DATA"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textSize="@dimen/_25sdp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvnodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv3"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/_25sdp"
+            android:text="NO DATA"
+            android:visibility="gone"
+            android:layout_margin="30dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -143,7 +146,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:visibility="gone"
         app:menu = "@menu/menu_view"
         app:headerLayout="@layout/headerlayout"/>
 </androidx.drawerlayout.widget.DrawerLayout>

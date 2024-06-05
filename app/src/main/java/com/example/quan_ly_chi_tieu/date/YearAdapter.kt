@@ -1,4 +1,4 @@
-package com.example.quan_ly_chi_tieu.recyclerview
+package com.example.quan_ly_chi_tieu.date
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quan_ly_chi_tieu.R
 
-class recyclerview_year : RecyclerView.Adapter<MyViewHolder_1>(){
+class YearAdapter : RecyclerView.Adapter<MyViewHolder_1>(){
     val yearList = listOf<String>("2024","2023","2022","2021","2020","2019","2018","2017","2016","2015")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder_1 {
         val layoutInflater = LayoutInflater.from(parent.context)

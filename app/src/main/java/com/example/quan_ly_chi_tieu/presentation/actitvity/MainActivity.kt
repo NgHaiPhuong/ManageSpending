@@ -1,20 +1,12 @@
-package com.example.quan_ly_chi_tieu.presentation.main
+package com.example.quan_ly_chi_tieu.presentation.actitvity
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.quan_ly_chi_tieu.R
 import com.example.quan_ly_chi_tieu.base.BaseActivity
-import com.example.quan_ly_chi_tieu.databinding.ActivityMainBinding
-import com.example.quan_ly_chi_tieu.model.Category
 import com.example.quan_ly_chi_tieu.presentation.category.CategoryFragment
 import com.example.quan_ly_chi_tieu.presentation.chart.ChartFragment
 import com.example.quan_ly_chi_tieu.presentation.home.HomeFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import meow.bottomnavigation.MeowBottomNavigation
 
 class MainActivity : BaseActivity() {

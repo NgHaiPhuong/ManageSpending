@@ -15,7 +15,6 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var isFragmentRunning = false
-    private lateinit var myDatabase: MyDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,

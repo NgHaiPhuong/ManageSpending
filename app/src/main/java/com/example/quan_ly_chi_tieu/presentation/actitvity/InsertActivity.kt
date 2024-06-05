@@ -1,4 +1,4 @@
-package com.example.quan_ly_chi_tieu.ui
+package com.example.quan_ly_chi_tieu.presentation.actitvity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quan_ly_chi_tieu.databinding.ActivityInsertBinding
-import com.example.quan_ly_chi_tieu.presentation.main.MainActivity
+import com.example.quan_ly_chi_tieu.ui.ManageActivity
 import java.util.Calendar
 
 
