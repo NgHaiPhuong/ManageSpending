@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="date"
+            type="String" />
+        <variable
+            name="total"
+            type="String" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background = "@color/cardview"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:id="@+id/tvdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{date}"
+            android:layout_marginStart="10dp"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total:"
+            android:layout_marginEnd="15dp"
+            android:layout_toStartOf="@id/tvtotal"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tvtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@{total}"
+            android:layout_marginEnd="10dp"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+</layout>

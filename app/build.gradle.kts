@@ -10,11 +10,11 @@ kapt {
 }
 
 android {
-    namespace = "com.example.quan_ly_chi_tieu"
+    namespace = "com.example.managespending"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.quan_ly_chi_tieu"
+        applicationId = "com.example.managespending"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -74,9 +74,15 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")// xác nhân danh tính người dùng
     implementation("com.google.firebase:firebase-storage") // lưu ảnh
 
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
     implementation("com.airbnb.android:epoxy:5.1.4")
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt("com.airbnb.android:epoxy-processor:5.1.4")
+    implementation("com.airbnb.android:epoxy-databinding:5.1.4")
+
+    // Layout error alignment library for horizontal epoxy model
+    implementation("com.github.rubensousa:gravitysnaphelper:2.2.2")
+
     // Layout error alignment library for horizontal epoxy model
     implementation("com.github.rubensousa:gravitysnaphelper:2.2.2")
 

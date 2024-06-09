@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Quan_Ly_Chi_Tieu" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">#3399FF</item>
+         <item name="colorPrimary">#DDDDDD</item>
     </style>
     <style name="Theme.Light_Theme" parent="Base.Theme.Quan_Ly_Chi_Tieu" >
         <item name="background_color">#FFFFFF</item>
