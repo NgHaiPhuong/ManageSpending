@@ -1,4 +1,4 @@
-package com.example.managespending.presentation.activity
+package com.example.managespending.presentation.insert
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -6,19 +6,30 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
 import com.example.managespending.databinding.ActivityInsertBinding
+import com.example.managespending.db.dao.MyDao
 import com.example.managespending.db.database.MyDatabase
+import com.example.managespending.db.viewmodel.MyViewModel
+import com.example.managespending.db.viewmodel.MyViewModelFactory
 import com.example.managespending.model.Transaction
+import com.example.managespending.presentation.activity.MainActivity
 import com.example.managespending.presentation.category.CategoryFragment
 import com.example.managespending.presentation.home.HomeFragment
 import java.util.Calendar
 
-
 class InsertActivity : BaseActivity() {
     private lateinit var binding : ActivityInsertBinding
-    private lateinit var myDatabase: MyDatabase
+    private lateinit var myViewModel: MyViewModel
+    private lateinit var dao : MyDao
+    private lateinit var homeFragment : HomeFragment
+    private lateinit var controller: InsertController
+    private lateinit var layoutManager : GridLayoutManager
+
     private var tinhtoan = ""
     private var pheptinh = ""
     private var so1 : Float = 0F
@@ -31,8 +42,32 @@ class InsertActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInsertBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupDatabase()
+        setupRecyclerView()
         handleEvent()
     }
+
+    private fun setupRecyclerView() {
+        controller = InsertController()
+        layoutManager = GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
+        controller.spanCount = 1
+        binding.epoxyspend.layoutManager = layoutManager
+        binding.epoxyspend.setControllerAndBuildModels(controller)
+
+        myViewModel.allCategoryList.observe(this) {category->
+            controller = InsertController()
+            controller.listCategory = controller.setList(controller.listCategory, category).toMutableList()
+            controller.requestModelBuild()
+        }
+    }
+
+    private fun setupDatabase() {
+        dao = MyDatabase.getInstance(application).myDao()
+        val factory = MyViewModelFactory(dao)
+        myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun handleEvent() {
         binding.tvnumber.setOnClickListener {
@@ -59,51 +94,47 @@ class InsertActivity : BaseActivity() {
             saveTransaction()
         }
 
-        /*binding.root.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (binding.calculation.visibility == View.VISIBLE &&
-                    !isPointInsideView(event.x, event.y, binding.calculation)
-                ) {
-                    binding.calculation.visibility = View.GONE
-                }
-            }
-            false
-        }*/
+        binding.imgItem.setOnClickListener {
+            binding.layout.visibility = View.VISIBLE
+            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.white)))
+            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.cardview)))
+        }
 
+        binding.tvspend.setOnClickListener {
+            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.white)))
+            binding.epoxyspend.visibility = View.VISIBLE
+            binding.epoxyincome.visibility = View.GONE
+            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.cardview)))
+        }
+        binding.tvincome.setOnClickListener {
+            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.white)))
+            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.cardview)))
+            binding.epoxyincome.visibility = View.VISIBLE
+            binding.epoxyspend.visibility = View.GONE
+        }
     }
 
     private fun saveTransaction(){
         val bundle = Bundle()
-        val intent = Intent(this, HomeFragment::class.java)
 
-        val name = binding.tvname.text
+        val name = binding.etname.text
         val date = binding.tvdate.text
+        val time = binding.tvhour.text
         val note = binding.etnote.text
-        val money = binding.tvnumber
+        val icon = "spend/car.png"
+        val background = binding.imgItem.circleBackgroundColor
+        val cost = binding.tvnumber.text.toString().toFloat()
 
-        bundle.putString("name", name.toString())
-        bundle.putString("date", date.toString())
-        bundle.putString("note", note.toString())
-        bundle.putString("money", money.toString())
+        myViewModel.addTransaction(
+            Transaction(0, name.toString(), icon, background.toString(), cost, "Spend", date.toString(), time.toString(), note.toString())
+        )
 
-        myDatabase = MyDatabase.getInstance(applicationContext)
-        val count = myDatabase.transactionDao().quantity()
-
-
-        intent.putExtras(bundle)
-        startActivity(intent)
-        finish()
+        homeFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, homeFragment)
+            .commit()
     }
 
-    private fun isPointInsideView(x: Float, y: Float, view: View): Boolean {
-        val location = intArrayOf(0, 0)
-        view.getLocationOnScreen(location)
-        val viewX = location[0]
-        val viewY = location[1]
-        val viewWidth = view.width
-        val viewHeight = view.height
-        return x >= viewX && x <= viewX + viewWidth && y >= viewY && y <= viewY + viewHeight
-    }
     @SuppressLint("SetTextI18n")
     private fun calculation(){
         binding.btnclear.setOnClickListener {
@@ -300,7 +331,7 @@ class InsertActivity : BaseActivity() {
         val day = calender.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.tvdate.text = String.format("%d-%d-%d", dayOfMonth, month, year)
+            binding.tvdate.text = String.format("%d/%d/%d", dayOfMonth, month + 1, year)
         }, year, month,day)
         datePickerDialog.show()
     }

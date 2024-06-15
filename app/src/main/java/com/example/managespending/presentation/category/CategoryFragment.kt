@@ -25,28 +25,7 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
-        setupView()
-        handleEvent()
-    }
 
-    private fun handleEvent() {
-
-    }
-
-    private fun setupView() {
-
-    }
-
-    private fun initData() {
-        addCategory()
-    }
-
-    private fun addCategory(){
-        myDatabase = MyDatabase.getInstance(requireContext().applicationContext)
-        myDatabase.addCategory(
-            Category(1,"Car", requireContext().assets.open("spend/car.png").toString(),"#000000","Spend")
-        );
     }
 
     companion object {

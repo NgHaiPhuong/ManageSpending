@@ -5,7 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.activity.InsertActivity"
+    tools:context=".presentation.insert.InsertActivity"
+    xmlns:bind="http://schemas.android.com/tools"
     android:background="#DDDDDD">
 
     <LinearLayout
@@ -45,7 +46,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/tvname"
+                android:id="@+id/etname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -202,46 +203,75 @@
         android:id="@+id/view_dim_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000"
-        android:visibility="gone"/>
-    
-    <LinearLayout
+        android:background="#8000" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="5"
-        android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/epxlistSearch"
-        android:visibility="gone">
+        android:layout_height="250dp"
+        android:background="@drawable/search_bar"
+        app:layout_constraintBottom_toTopOf="@+id/epxlistSearch">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/tvchitieu"
-            android:layout_weight="2"
-            android:text="CHI TIÊU"
+            android:id="@+id/tvspend"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="10dp"
+            android:text="SPEND"
             android:textAlignment="center"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/epoxylayout"
+            app:layout_constraintEnd_toStartOf="@id/tvincome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/tvthunhap"
-            android:layout_weight="2"
-            android:text="THU NHẬP"
+            android:id="@+id/tvincome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="10dp"
+            android:text="INCOME"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/epoxylayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvspend"
+            app:layout_constraintEnd_toStartOf="@id/imgseting"/>
 
         <ImageView
+            android:id="@+id/imgseting"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginVertical="10dp"
             android:layout_weight="1"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:onClick="showManager"
             android:src="@drawable/ic_settings"
-            android:onClick="showManager"/>
-    </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/epoxylayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgseting">
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/epoxyincome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_alignParentTop="true" />
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/epoxyspend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"/>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/epxlistSearch"
@@ -286,9 +316,11 @@
             android:layout_height="60dp"
             android:layout_below="@id/imgback"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp"
             android:onClick="showList"
-            android:src="@drawable/car"/>
+            bind:imageUrl="spend/car.png"
+            android:background="@drawable/circle_background"/>
 
         <TextView
             android:id="@+id/tvnumber"

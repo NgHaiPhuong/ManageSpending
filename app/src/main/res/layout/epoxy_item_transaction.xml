@@ -24,9 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{balance}"
-            android:textSize="80dp"
+            android:textSize="50dp"
+            android:layout_marginBottom="15dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
             android:textColor="@color/money"
             android:inputType="numberDecimal"
             android:background="@null"/>
@@ -95,7 +95,8 @@
             android:layout_toEndOf="@id/tv3"
             android:layout_below="@id/tv2"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="23dp"
+            android:textColor="#99FF33"
             android:textSize="@dimen/_15sdp" />
 
         <TextView

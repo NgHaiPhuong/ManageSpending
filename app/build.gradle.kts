@@ -64,15 +64,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-auth")// xác nhân danh tính người dùng
-    implementation("com.google.firebase:firebase-storage") // lưu ảnh
 
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     implementation("com.airbnb.android:epoxy:5.1.4")
@@ -107,9 +98,10 @@ dependencies {
     // room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:2.6.1")
+    kapt( "android.arch.persistence.room:compiler:1.0.0")
 
+    //design
     implementation ("com.android.support:design:26.1.0")
 
     // Meow Bottom Nav
@@ -117,4 +109,13 @@ dependencies {
 
     //Circle Image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //viewmodel, livedata
+    val lifecycle_version = "2.8.1"
+    val arch_version = "2.2.0"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 }

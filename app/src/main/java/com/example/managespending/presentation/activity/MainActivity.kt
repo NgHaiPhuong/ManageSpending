@@ -1,39 +1,27 @@
 package com.example.managespending.presentation.activity
 
 import android.os.Bundle
-import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
-import com.example.managespending.db.dao.CategoryDao
-import com.example.managespending.db.dao.TransactionDao
 import com.example.managespending.db.database.MyDatabase
-import com.example.managespending.model.Category
-import com.example.managespending.model.Transaction
+import com.example.managespending.db.viewmodel.MyViewModel
+import com.example.managespending.db.viewmodel.MyViewModelFactory
 import com.example.managespending.presentation.category.CategoryFragment
 import com.example.managespending.presentation.chart.ChartFragment
 import com.example.managespending.presentation.home.HomeFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 
 class MainActivity : BaseActivity() {
     private lateinit var bottomNavigation : MeowBottomNavigation
     private var selectedItemId = 1
-    private lateinit var myDatabase: MyDatabase
-    private lateinit var dao : TransactionDao
-    private lateinit var dao1 : CategoryDao
+    private lateinit var myViewModel : MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            myDatabase = MyDatabase.getInstance(application)
-
-        }
 
         initData()
         setupView()
