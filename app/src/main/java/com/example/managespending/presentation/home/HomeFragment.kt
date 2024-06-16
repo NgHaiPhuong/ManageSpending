@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.managespending.databinding.FragmentHomeBinding
 import com.example.managespending.db.dao.MyDao
+import com.example.managespending.db.database.GetList
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
@@ -26,7 +27,6 @@ class HomeFragment : Fragment() {
     private lateinit var controller: HomeController
     private lateinit var layoutManager : GridLayoutManager
     private lateinit var myViewModel: MyViewModel
-    private lateinit var dao : MyDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +45,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupDatabase() {
-        dao = MyDatabase.getInstance(requireContext().applicationContext).myDao()
+        val dao = MyDatabase.getInstance(requireContext().applicationContext).myDao()
         val factory = MyViewModelFactory(dao)
         myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
-      //  myViewModel.addAllCategory(GetListCategory.addData())
+      //  myViewModel.addAllCategory(GetList.addData())
+      //  myViewModel.addAllTransaction(GetList.addDataTran())
     }
 
     private fun setupRecyclerView() {

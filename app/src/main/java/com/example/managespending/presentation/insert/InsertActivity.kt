@@ -17,19 +17,22 @@ import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
 import com.example.managespending.model.Transaction
+import com.example.managespending.presentation.activity.DetailActivity
 import com.example.managespending.presentation.activity.MainActivity
 import com.example.managespending.presentation.category.CategoryFragment
 import com.example.managespending.presentation.home.HomeFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 
 class InsertActivity : BaseActivity() {
     private lateinit var binding : ActivityInsertBinding
     private lateinit var myViewModel: MyViewModel
-    private lateinit var dao : MyDao
     private lateinit var homeFragment : HomeFragment
     private lateinit var controller: InsertController
     private lateinit var layoutManager : GridLayoutManager
-
     private var tinhtoan = ""
     private var pheptinh = ""
     private var so1 : Float = 0F
@@ -63,7 +66,7 @@ class InsertActivity : BaseActivity() {
     }
 
     private fun setupDatabase() {
-        dao = MyDatabase.getInstance(application).myDao()
+        val dao = MyDatabase.getInstance(application).myDao()
         val factory = MyViewModelFactory(dao)
         myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
     }
@@ -125,14 +128,17 @@ class InsertActivity : BaseActivity() {
         val background = binding.imgItem.circleBackgroundColor
         val cost = binding.tvnumber.text.toString().toFloat()
 
-        myViewModel.addTransaction(
-            Transaction(0, name.toString(), icon, background.toString(), cost, "Spend", date.toString(), time.toString(), note.toString())
-        )
-
-        homeFragment.arguments = bundle
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, homeFragment)
-            .commit()
+        CoroutineScope(Dispatchers.IO).launch {
+            myViewModel.addTransaction(
+                Transaction(0,name.toString(), icon, background.toString(), cost, "Spend", date.toString(), time.toString(), note.toString())
+            )
+            withContext(Dispatchers.Main){
+                homeFragment.arguments = bundle
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.fragment_container, homeFragment)
+                    .commit()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -327,12 +333,12 @@ class InsertActivity : BaseActivity() {
         binding.calculation.visibility = View.GONE
         val calender = Calendar.getInstance()
         val year = calender.get(Calendar.YEAR)
-        val month = calender.get(Calendar.MONTH)
+        val month = calender.get(Calendar.MONTH) + 1
         val day = calender.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             binding.tvdate.text = String.format("%d/%d/%d", dayOfMonth, month + 1, year)
-        }, year, month,day)
+        }, year, month, day)
         datePickerDialog.show()
     }
 
