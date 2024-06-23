@@ -3,7 +3,6 @@ package com.example.managespending.presentation.home
 import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.SnapHelper
@@ -15,8 +14,8 @@ import com.example.managespending.itemInfor
 import com.example.managespending.itemLoading
 import com.example.managespending.itemTransaction
 import com.example.managespending.model.Transaction
-import com.example.managespending.nodata
 import com.example.managespending.presentation.activity.DetailActivity
+import com.example.managespending.presentation.activity.BudgetActivity
 import com.example.managespending.util.FormatNumberUtil
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 
@@ -30,6 +29,16 @@ class HomeController : EpoxyController() {
         }
 
     val groupedTransactions = mutableMapOf<String, MutableList<Transaction>>()
+    var income1 : Float = 0f
+        set(value) {
+            field = value
+            requestModelBuild()
+        }
+    var limit : Float = 0f
+        set(value) {
+            field = value
+            requestModelBuild()
+        }
 
     override fun buildModels() {
         Carousel.setDefaultGlobalSnapHelperFactory(object : Carousel.SnapHelperFactory(){
@@ -48,10 +57,15 @@ class HomeController : EpoxyController() {
 
         itemTransaction {
             id("item_transaction")
-            balance("1.000.000")
-            expand("150.000")
-            income("2.000.000")
-            arms("300.000")
+            balance(this@HomeController.getBalance())
+            expand(this@HomeController.getExpend())
+            income(this@HomeController.getIncome())
+            arms(this@HomeController.limit.toString())
+            onClick(View.OnClickListener {
+                val context = it.context
+                val intent = Intent(context, BudgetActivity::class.java)
+                context.startActivity(intent)
+            })
             spanSizeOverride { totalSpanCount, position, itemCount ->
                 totalSpanCount
             }
@@ -132,6 +146,40 @@ class HomeController : EpoxyController() {
 
         }
 
+    }
+
+    fun getBalance() : String{
+        var income : Float = 0f
+        var expend : Float = 0f
+        listTransaction.forEach { item ->
+            if(item.category.contains("income", true)){
+                income += item.cost
+            }
+            else if(item.category.contains("spend", true)){
+                expend += item.cost
+            }
+        }
+        return FormatNumberUtil.format((income - expend))
+    }
+
+    fun getIncome() : String {
+        var money : Float = 0f
+        listTransaction.forEach { item ->
+            if(item.category.contains("income", true)){
+                money += item.cost
+            }
+        }
+        return FormatNumberUtil.format(money + income1)
+    }
+
+    fun getExpend() : String {
+        var money : Float = 0f
+        listTransaction.forEach { item->
+            if(item.category.contains("spend", true)){
+                money += item.cost
+            }
+        }
+        return FormatNumberUtil.format(money)
     }
 
     fun getDate() : String{

@@ -112,10 +112,14 @@ dependencies {
 
     //viewmodel, livedata
     val lifecycle_version = "2.8.1"
-    val arch_version = "2.2.0"
+
+    implementation("com.google.android.material:material:1.1.0-beta01")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
+    // Material Components library
+    implementation ("com.google.android.material:material:1.9.0")
 }

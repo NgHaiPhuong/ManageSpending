@@ -2,6 +2,7 @@ package com.example.managespending.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.managespending.databinding.FragmentHomeBinding
-import com.example.managespending.db.dao.MyDao
-import com.example.managespending.db.database.GetList
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
-import com.example.managespending.model.Transaction
 import com.example.managespending.presentation.insert.InsertActivity
 import com.example.managespending.presentation.activity.MainActivity
 
@@ -53,21 +52,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        val bundle = arguments ?: Bundle().apply {
+            putString("money1", "0.0")
+            putString("limit1", "0.0")
+        }
+        val money = bundle.getString("money") ?: "0.0"
+        val limit = bundle.getString("limit") ?: "0.0"
+
+        Log.d("cost", "fragment: $money")
+        Log.d("cost", limit)
+
         controller = HomeController()
         layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         controller.spanCount = 1
         binding.inforDetails.layoutManager = layoutManager
         binding.inforDetails.setControllerAndBuildModels(controller)
 
+        controller.income1 = money.toFloatOrNull() ?: 0f
+        controller.limit = limit.toFloatOrNull() ?: 0f
+        controller.requestModelBuild()
 
         myViewModel.allTransactionList.observe(viewLifecycleOwner) { transactions ->
             controller.listTransaction = transactions.toMutableList()
             controller.requestModelBuild()
         }
+        val itemDecoration : RecyclerView.ItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.inforDetails.addItemDecoration(itemDecoration)
     }
 
     private fun handleEvent() {
-         binding.imgsetting.setOnClickListener {
+        binding.imgsetting.setOnClickListener {
              if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                  binding.drawerLayout.closeDrawer(GravityCompat.START)
              } else {
@@ -90,7 +104,7 @@ class HomeFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() : HomeFragment{
+        fun newInstance() : HomeFragment {
             val args =Bundle() // đóng gói dữ liệu
             val fragment = HomeFragment()
             fragment.arguments = args

@@ -7,20 +7,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
 import com.example.managespending.databinding.ActivityInsertBinding
-import com.example.managespending.db.dao.MyDao
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
 import com.example.managespending.model.Transaction
-import com.example.managespending.presentation.activity.DetailActivity
 import com.example.managespending.presentation.activity.MainActivity
 import com.example.managespending.presentation.category.CategoryFragment
+import com.example.managespending.presentation.viewpager.ViewPagerAdapter
 import com.example.managespending.presentation.home.HomeFragment
+import com.example.managespending.presentation.viewpager.ViewPagerAdapter2
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,8 +30,7 @@ class InsertActivity : BaseActivity() {
     private lateinit var binding : ActivityInsertBinding
     private lateinit var myViewModel: MyViewModel
     private lateinit var homeFragment : HomeFragment
-    private lateinit var controller: InsertController
-    private lateinit var layoutManager : GridLayoutManager
+    private lateinit var viewPagerAdapter: ViewPagerAdapter2
     private var tinhtoan = ""
     private var pheptinh = ""
     private var so1 : Float = 0F
@@ -47,22 +45,20 @@ class InsertActivity : BaseActivity() {
         setContentView(binding.root)
 
         setupDatabase()
-        setupRecyclerView()
+        setupView()
         handleEvent()
     }
 
-    private fun setupRecyclerView() {
-        controller = InsertController()
-        layoutManager = GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
-        controller.spanCount = 1
-        binding.epoxyspend.layoutManager = layoutManager
-        binding.epoxyspend.setControllerAndBuildModels(controller)
+    private fun setupView() {
+        viewPagerAdapter = ViewPagerAdapter2(this)
+        binding.viewpager.adapter = viewPagerAdapter
 
-        myViewModel.allCategoryList.observe(this) {category->
-            controller = InsertController()
-            controller.listCategory = controller.setList(controller.listCategory, category).toMutableList()
-            controller.requestModelBuild()
-        }
+        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "Spend"
+                1 -> tab.text = "Income"
+            }
+        }.attach()
     }
 
     private fun setupDatabase() {
@@ -75,7 +71,6 @@ class InsertActivity : BaseActivity() {
     private fun handleEvent() {
         binding.tvnumber.setOnClickListener {
             binding.calculation.visibility = View.VISIBLE
-            binding.epxlistSearch.visibility = View.GONE
             binding.layout.visibility = View.GONE
             calculation()
             binding.viewDimBackground.visibility = View.VISIBLE
@@ -89,7 +84,6 @@ class InsertActivity : BaseActivity() {
         binding.viewDimBackground.setOnClickListener {
             binding.viewDimBackground.visibility = View.GONE
             binding.calculation.visibility = View.GONE
-            binding.epxlistSearch.visibility = View.GONE
             binding.layout.visibility = View.GONE
         }
 
@@ -99,21 +93,7 @@ class InsertActivity : BaseActivity() {
 
         binding.imgItem.setOnClickListener {
             binding.layout.visibility = View.VISIBLE
-            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.white)))
-            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.cardview)))
-        }
-
-        binding.tvspend.setOnClickListener {
-            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.white)))
-            binding.epoxyspend.visibility = View.VISIBLE
-            binding.epoxyincome.visibility = View.GONE
-            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.cardview)))
-        }
-        binding.tvincome.setOnClickListener {
-            binding.tvincome.setBackgroundColor((getResources().getColor(R.color.white)))
-            binding.tvspend.setBackgroundColor((getResources().getColor(R.color.cardview)))
-            binding.epoxyincome.visibility = View.VISIBLE
-            binding.epoxyspend.visibility = View.GONE
+            binding.viewDimBackground.visibility = View.VISIBLE
         }
     }
 
@@ -365,14 +345,15 @@ class InsertActivity : BaseActivity() {
 
     fun showList(view: View) {
         binding.layout.visibility = View.VISIBLE
-        binding.epxlistSearch.visibility = View.VISIBLE
         binding.calculation.visibility = View.GONE
         binding.viewDimBackground.visibility = View.VISIBLE
     }
 
     fun showManager(view: View) {
-        startActivity(Intent(this@InsertActivity, CategoryFragment::class.java))
-        finish()
+        val categoryFragment = CategoryFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, categoryFragment)
+            .commit()
     }
 
     fun showmain(view:View){

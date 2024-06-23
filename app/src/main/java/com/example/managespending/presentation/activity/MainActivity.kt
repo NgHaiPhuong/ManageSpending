@@ -1,15 +1,11 @@
 package com.example.managespending.presentation.activity
 
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
-import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
-import com.example.managespending.db.viewmodel.MyViewModelFactory
 import com.example.managespending.presentation.category.CategoryFragment
 import com.example.managespending.presentation.chart.ChartFragment
 import com.example.managespending.presentation.home.HomeFragment
@@ -35,6 +31,13 @@ class MainActivity : BaseActivity() {
 
     private fun handleEvent() {
 
+    }
+
+    fun toFragment(){
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, HomeFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun displayBottomNav(){
@@ -72,7 +75,13 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupView() {
-        replaceFragment(HomeFragment.newInstance())
+        val bundle = intent.extras ?: Bundle().apply {
+            putString("money1", "0.0")
+            putString("limit1", "0.0")
+        }
+        val homeFragment = HomeFragment.newInstance()
+        homeFragment.arguments = bundle
+        replaceFragment(homeFragment)
         displayBottomNav()
     }
 

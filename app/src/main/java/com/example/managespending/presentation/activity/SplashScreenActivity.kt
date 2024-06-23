@@ -1,5 +1,6 @@
 package com.example.managespending.presentation.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

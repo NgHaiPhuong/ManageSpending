@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:background="@drawable/search_bar"
+        android:background="@drawable/card"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -208,78 +208,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:background="@drawable/search_bar"
-        app:layout_constraintBottom_toTopOf="@+id/epxlistSearch">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
-        <TextView
-            android:id="@+id/tvspend"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingTop="10dp"
-            android:text="SPEND"
-            android:textAlignment="center"
-            android:textSize="18dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/epoxylayout"
-            app:layout_constraintEnd_toStartOf="@id/tvincome"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/cardview"
+            android:textDirection="ltr"
+            app:tabIndicatorColor="@color/cardview"
+            app:tabIndicatorFullWidth="true"
+            app:tabSelectedTextColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvincome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingTop="10dp"
-            android:text="INCOME"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/epoxylayout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvspend"
-            app:layout_constraintEnd_toStartOf="@id/imgseting"/>
-
-        <ImageView
-            android:id="@+id/imgseting"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginVertical="10dp"
-            android:layout_weight="1"
-            android:layout_alignParentEnd="true"
-            android:onClick="showManager"
-            android:src="@drawable/ic_settings"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <RelativeLayout
-            android:id="@+id/epoxylayout"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgseting">
-            <com.airbnb.epoxy.EpoxyRecyclerView
-                android:id="@+id/epoxyincome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_alignParentTop="true" />
-
-            <com.airbnb.epoxy.EpoxyRecyclerView
-                android:id="@+id/epoxyspend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"/>
-        </RelativeLayout>
+            app:layout_constraintTop_toBottomOf="@id/tab_layout"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/epxlistSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/rev"
@@ -294,7 +252,7 @@
             android:layout_height="30dp"
             android:src = "@drawable/ic_arrow"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginVertical="15dp"
             android:layout_alignParentStart="true"
             android:onClick="showmain"/>
 
