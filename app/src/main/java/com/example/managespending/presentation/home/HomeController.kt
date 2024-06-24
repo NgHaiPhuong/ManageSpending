@@ -27,7 +27,6 @@ class HomeController : EpoxyController() {
             field = value
             requestModelBuild()
         }
-
     val groupedTransactions = mutableMapOf<String, MutableList<Transaction>>()
     var income1 : Float = 0f
         set(value) {
