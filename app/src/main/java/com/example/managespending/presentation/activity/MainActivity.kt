@@ -13,7 +13,6 @@ import com.example.managespending.presentation.home.HomeFragment
 class MainActivity : BaseActivity() {
     private lateinit var bottomNavigation : MeowBottomNavigation
     private var selectedItemId = 1
-    private lateinit var myViewModel : MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
