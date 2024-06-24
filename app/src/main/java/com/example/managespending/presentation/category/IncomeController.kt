@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.SnapHelper
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
+import com.example.managespending.R
 import com.example.managespending.itemIncome
 import com.example.managespending.model.Category
 import com.example.managespending.nodata

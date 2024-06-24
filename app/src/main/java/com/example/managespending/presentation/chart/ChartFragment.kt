@@ -1,27 +1,22 @@
 package com.example.managespending.presentation.chart
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.managespending.R
 import com.example.managespending.databinding.FragmentChartBinding
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.example.managespending.presentation.viewpager.ViewPagerAdapter_Chart
+import com.google.android.material.tabs.TabLayoutMediator
 
 class ChartFragment : Fragment(){
     private lateinit var binding : FragmentChartBinding
+    private lateinit var viewpagerAdapter : ViewPagerAdapter_Chart
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,8 +62,32 @@ class ChartFragment : Fragment(){
     }
 
     private fun setupView(){
+        viewpagerAdapter = ViewPagerAdapter_Chart(this)
+        binding.viewChart.adapter = viewpagerAdapter
 
+        TabLayoutMediator(binding.tab, binding.viewChart){tab, position ->
+            tab.customView = createTabView(position)
+        }.attach()
     }
+    @SuppressLint("InflateParams")
+    private fun createTabView(position: Int): View {
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab, null)
+        val icon = view.findViewById<ImageView>(R.id.tab_icon)
+        val textView = view.findViewById<TextView>(R.id.tab_text)
+
+        when (position) {
+            0 -> {
+                icon.setImageResource(R.drawable.line_chart)
+                textView.text = "Bar Chart"
+            }
+            1 -> {
+                icon.setImageResource(R.drawable.line)
+                textView.text = "Line Chart"
+            }
+        }
+        return view
+    }
+
     companion object {
         fun newInstance() : ChartFragment {
             val args = Bundle()

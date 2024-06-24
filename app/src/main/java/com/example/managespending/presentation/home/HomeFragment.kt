@@ -76,8 +76,6 @@ class HomeFragment : Fragment() {
             controller.listTransaction = transactions.toMutableList()
             controller.requestModelBuild()
         }
-        val itemDecoration : RecyclerView.ItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        binding.inforDetails.addItemDecoration(itemDecoration)
     }
 
     private fun handleEvent() {
