@@ -17,16 +17,6 @@ class MyViewModel(private val dao: MyDao) : ViewModel(){
     val allCategoryList = dao.getAllCategory()
     val allTransactionList = dao.getAllTransaction()
     val category : MutableLiveData<List<Category>?> = MutableLiveData()
-  //  private var getList = GetList()
-   /* fun getCategoryData(){
-        viewModelScope.launch {
-            var result : List<Category>? = null
-            withContext(Dispatchers.IO){
-                result = getList.addData()
-            }
-            category.value = result
-        }
-    }*/
     fun addCategory(newItem : Category) = viewModelScope.launch {
         withContext(Dispatchers.IO){
             dao.insertCategory(newItem)
@@ -47,16 +37,14 @@ class MyViewModel(private val dao: MyDao) : ViewModel(){
             dao.insertAllTransaction(newItem)
         }
     }
-    fun deleteCategory(id : Int) = viewModelScope.launch {
+    fun deleteCategory(category: Category) = viewModelScope.launch {
         withContext(Dispatchers.IO){
-            dao.deleteCategoryById(id)
+            dao.deleteCategory(category)
         }
     }
-    fun deleteTransaction(transactionId: Int) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                dao.deleteTransactionById(transactionId)
-            }
+    fun deleteTransaction(transaction: Transaction) = viewModelScope.launch {
+        withContext(Dispatchers.IO){
+            dao.deleteTransaction(transaction)
         }
     }
     fun updateTransaction(itemList : Transaction) = viewModelScope.launch {
@@ -64,7 +52,6 @@ class MyViewModel(private val dao: MyDao) : ViewModel(){
             dao.updateTransaction(itemList)
         }
     }
-
     fun deleteAllTransaction() = viewModelScope.launch {
         withContext(Dispatchers.IO){
             dao.deleteAllTransaction()

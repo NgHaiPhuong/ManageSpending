@@ -29,14 +29,15 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgtransaction"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             bind:imageUrl="@{url}"
             android:contentDescription="@null"
             android:background="@drawable/circle_background"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:padding="5dp"/>
         <TextView
             android:id="@+id/tvname"
             android:layout_width="wrap_content"
@@ -44,8 +45,8 @@
             android:layout_toEndOf="@id/imgtransaction"
             android:text="@{name}"
             android:layout_centerVertical="true"
-            android:layout_marginHorizontal="30dp"
-            android:textSize="@dimen/_15sdp"
+            android:layout_marginHorizontal="15dp"
+            android:textSize="16sp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tvcost"
@@ -55,7 +56,7 @@
             android:text="@{cost}"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
     </RelativeLayout>

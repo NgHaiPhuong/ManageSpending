@@ -1,6 +1,7 @@
 package com.example.managespending.presentation.category
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,22 +18,17 @@ import com.example.managespending.databinding.FragmentIncomeBinding
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
+import com.example.managespending.model.Category
+import com.example.managespending.presentation.insert.InsertActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [IncomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class IncomeFragment : Fragment() {
     private lateinit var binding : FragmentIncomeBinding
     private lateinit var controller: IncomeController
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var myViewModel: MyViewModel
+    private lateinit var listCategory: MutableList<Category>
+    private var listIncome : MutableList<Category> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,47 +43,56 @@ class IncomeFragment : Fragment() {
 
         setupDatabase()
         setupView()
+        handleEvent()
     }
-
     private fun setupDatabase() {
         val dao = MyDatabase.getInstance(requireContext().applicationContext).myDao()
         val factory = MyViewModelFactory(dao)
         myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
     }
-
     private fun setupView() {
-        controller = IncomeController()
+        controller = IncomeController{ icon, name, classify ->
+            (requireActivity() as InsertActivity).displayData(icon, name, classify)
+        }
         layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         controller.spanCount = 1
         binding.epoxyincome.layoutManager = layoutManager
         binding.epoxyincome.setControllerAndBuildModels(controller)
 
         myViewModel.allCategoryList.observe(viewLifecycleOwner){ category ->
-            controller.listCategory = category.toMutableList()
+            listCategory = category.toMutableList()
+            listIncome.clear()
+            listCategory.forEach { item ->
+                if(item.classify.contains("income", true)){
+                    listIncome.add(item)
+                }
+            }
+            controller.listCategory = listIncome
             controller.requestModelBuild()
         }
-
+    }
+    private fun handleEvent(){
         val itemDecoration : RecyclerView.ItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.epoxyincome.addItemDecoration(itemDecoration)
 
-        EpoxyTouchHelper.initDragging(controller)
-            .withRecyclerView(binding.epoxyincome)
-            .forVerticalList()
-            .withTarget(ItemIncomeBindingModel_::class.java)
-            .andCallbacks(object : EpoxyTouchHelper.DragCallbacks<ItemIncomeBindingModel_>(){
-                override fun onModelMoved(
-                    fromPosition: Int,
-                    toPosition: Int,
-                    modelBeingMoved: ItemIncomeBindingModel_?,
-                    itemView: View?
-                ) {
-                    controller.listCategory.removeAt(toPosition)
-                    controller.requestModelBuild()
-                }
-            })
+        /*  EpoxyTouchHelper.initDragging(controller)
+              .withRecyclerView(binding.epoxyincome)
+              .forVerticalList()
+              .withTarget(ItemIncomeBindingModel_::class.java)
+              .andCallbacks(object : EpoxyTouchHelper.DragCallbacks<ItemIncomeBindingModel_>(){
+                  override fun onModelMoved(
+                      fromPosition: Int,
+                      toPosition: Int,
+                      modelBeingMoved: ItemIncomeBindingModel_?,
+                      itemView: View?
+                  ) {
+                      controller.listCategory.removeAt(toPosition)
+                      controller.requestModelBuild()
+                  }
+              })*/
 
         EpoxyTouchHelper.initSwiping(binding.epoxyincome)
-            .leftAndRight()
+            .right()
             .withTarget(ItemIncomeBindingModel_::class.java)
             .andCallbacks(object: EpoxyTouchHelper.SwipeCallbacks<ItemIncomeBindingModel_>(){
                 override fun onSwipeCompleted(
@@ -96,15 +101,18 @@ class IncomeFragment : Fragment() {
                     position: Int,
                     direction: Int
                 ) {
-                    controller.listCategory.removeAt(position)
+                    myViewModel.deleteCategory(listIncome[position])
+                    listIncome.removeAt(position)
+                    controller.listCategory = listIncome.toMutableList()
                     controller.notifyModelChanged(position)
                     controller.requestModelBuild()
-                    Toast.makeText(requireContext(),
-                        "Delete successful",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Delete successful at position $position",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
-
     }
     companion object {
         fun newInstance() : IncomeFragment{

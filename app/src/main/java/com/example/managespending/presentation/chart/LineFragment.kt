@@ -75,6 +75,18 @@ class LineFragment : Fragment(), OnChartValueSelectedListener{
             setData1("Income")
         }
     }
+    fun updateChartVisibility(isIncomeChecked: Boolean, isExpendChecked: Boolean) {
+        if (isIncomeChecked && !isExpendChecked) {
+            binding.expendChart.visibility = View.GONE
+            binding.incomeChart.visibility = View.VISIBLE
+        } else if (!isIncomeChecked && isExpendChecked) {
+            binding.expendChart.visibility = View.VISIBLE
+            binding.incomeChart.visibility = View.GONE
+        } else {
+            binding.expendChart.visibility = View.VISIBLE
+            binding.incomeChart.visibility = View.VISIBLE
+        }
+    }
     private fun setupDatabase() {
         val dao = MyDatabase.getInstance(requireContext().applicationContext).myDao()
         val factory = MyViewModelFactory(dao)

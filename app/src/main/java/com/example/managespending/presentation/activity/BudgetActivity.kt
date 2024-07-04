@@ -54,20 +54,6 @@ class BudgetActivity : BaseActivity() {
                 putString("money", money)
                 putString("limit", limit)
             }
-           /* val homeFragment = HomeFragment()
-            homeFragment.arguments = bundle
-
-            val container = findViewById<FrameLayout>(R.id.fragment_container)
-            if(container != null){
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, homeFragment)
-                    .commit()
-            }
-            else {
-                Toast.makeText(this,
-                    "abc",
-                    Toast.LENGTH_LONG).show()
-            }*/
 
             val intent = Intent(this, MainActivity::class.java).apply {
                 putExtras(bundle)

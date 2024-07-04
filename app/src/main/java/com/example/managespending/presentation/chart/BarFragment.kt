@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import androidx.lifecycle.ViewModelProvider
+import com.example.managespending.R
 import com.example.managespending.databinding.FragmentBarBinding
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
@@ -57,7 +60,6 @@ class BarFragment : Fragment(), OnChartValueSelectedListener {
             designChart()
             setData("Spend")
         }
-
         // income
         myViewModel.allTransactionList.observe(viewLifecycleOwner){ transactions ->
             listTransaction.clear()
@@ -73,6 +75,18 @@ class BarFragment : Fragment(), OnChartValueSelectedListener {
 
             designChart1()
             setData1("Income")
+        }
+    }
+    fun updateChartVisibility(isIncomeChecked: Boolean, isExpendChecked: Boolean) {
+        if (isIncomeChecked && !isExpendChecked) {
+            binding.expendChart.visibility = View.GONE
+            binding.incomeChart.visibility = View.VISIBLE
+        } else if (!isIncomeChecked && isExpendChecked) {
+            binding.expendChart.visibility = View.VISIBLE
+            binding.incomeChart.visibility = View.GONE
+        } else {
+            binding.expendChart.visibility = View.VISIBLE
+            binding.incomeChart.visibility = View.VISIBLE
         }
     }
     private fun setupDatabase() {
@@ -235,6 +249,7 @@ class BarFragment : Fragment(), OnChartValueSelectedListener {
         val yAxisRight = binding.incomeChart.axisRight
         yAxisRight.isEnabled = false
     }
+
     companion object {
         fun newInstance() : BarFragment{
             val args = Bundle()

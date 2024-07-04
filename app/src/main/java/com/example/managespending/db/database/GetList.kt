@@ -5,8 +5,7 @@ import com.example.managespending.model.Transaction
 import kotlinx.coroutines.delay
 
 object GetList{
-    suspend fun addData() : List<Category>{
-        delay(5000)
+    fun addData() : List<Category>{
         return arrayListOf(
             Category(1, "Build", "spend/build.png", "#ffffff", "spend"),
             Category(2, "Car", "spend/car.png", "#ffffff", "spend"),
@@ -25,7 +24,9 @@ object GetList{
             Transaction(1, "Sell", "income/sell.png", "#ffffff", 1000000f, "Income", "10/6/2024", "15:30", "Sell food a day"),
             Transaction(2, "Car", "spend/car.png", "#ffffff", 65000f, "Spend", "10/6/2024", "15:30", "Accident"),
             Transaction(3, "Study", "spend/study.png", "#ffffff", 20000f, "Spend", "11/6/2024", "15:30", "Education for children"),
-            Transaction(4, "Electric", "spend/study.png", "#ffffff", 20000f, "Spend", "12/6/2024", "15:30", "Electric money for family"),
+            Transaction(4, "Electric", "spend/electric.png", "#ffffff", 20000f, "Spend", "12/6/2024", "15:30", "Electric money for family"),
+            Transaction(5, "Salary", "income/salary.png", "#ffffff", 12000000f, "Income", "22/6/2024", "15:30", "Salary a month"),
+            Transaction(6, "Meat", "spend/meat.png", "#ffffff", 780000f, "Spend", "22/6/2024", "15:30", "meat pig"),
         )
     }
 }

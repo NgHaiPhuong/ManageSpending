@@ -1,5 +1,6 @@
 package com.example.managespending.presentation.category
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,8 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import com.example.managespending.databinding.FragmentCategoryBinding
+import com.example.managespending.presentation.insertCategory.InsertCategoryActivity
 import com.example.managespending.presentation.activity.MainActivity
 import com.example.managespending.presentation.viewpager.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -49,6 +50,10 @@ class CategoryFragment : Fragment() {
                 initData(binding.etsearch.text.toString())
             }
         })
+        binding.tvplusItem.setOnClickListener {
+            val intent = Intent(requireContext().applicationContext, InsertCategoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initData(keyword:String){

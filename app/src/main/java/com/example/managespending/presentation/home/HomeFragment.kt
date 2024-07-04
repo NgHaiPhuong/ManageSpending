@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.managespending.databinding.FragmentHomeBinding
+import com.example.managespending.db.database.GetList
 import com.example.managespending.db.database.MyDatabase
 import com.example.managespending.db.viewmodel.MyViewModel
 import com.example.managespending.db.viewmodel.MyViewModelFactory
@@ -47,8 +48,10 @@ class HomeFragment : Fragment() {
         val dao = MyDatabase.getInstance(requireContext().applicationContext).myDao()
         val factory = MyViewModelFactory(dao)
         myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
-      //  myViewModel.addAllCategory(GetList.addData())
-      //  myViewModel.addAllTransaction(GetList.addDataTran())
+      // myViewModel.addAllCategory(GetList.addData())
+       //myViewModel.addAllTransaction(GetList.addDataTran())
+       // myViewModel.deleteAllCategory()
+       // myViewModel.deleteAllTransaction()
     }
 
     private fun setupRecyclerView() {

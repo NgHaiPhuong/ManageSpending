@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="url"
+            type="String"/>
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#dddddd">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgItem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            bind:imageUrl="@{url}"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:background="@drawable/circle_background"
+            android:onClick="@{onClick}"/>
+    </RelativeLayout>
+</layout>

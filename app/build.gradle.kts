@@ -64,9 +64,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     implementation("com.airbnb.android:epoxy:5.1.4")
+
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt("com.airbnb.android:epoxy-processor:5.1.4")
     implementation("com.airbnb.android:epoxy-databinding:5.1.4")
@@ -122,4 +122,7 @@ dependencies {
 
     // Material Components library
     implementation ("com.google.android.material:material:1.9.0")
+
+    // color picker
+    implementation ("com.github.yukuku:ambilwarna:2.0.1")
 }

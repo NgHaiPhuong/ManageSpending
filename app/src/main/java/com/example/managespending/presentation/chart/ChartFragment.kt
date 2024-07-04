@@ -2,17 +2,22 @@ package com.example.managespending.presentation.chart
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.window.isTraySupported
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBindings
 import com.example.managespending.R
 import com.example.managespending.databinding.FragmentChartBinding
 import com.example.managespending.presentation.viewpager.ViewPagerAdapter_Chart
+import com.github.mikephil.charting.charts.Chart
 import com.google.android.material.tabs.TabLayoutMediator
+import org.jetbrains.skia.Drawable
 
 class ChartFragment : Fragment(){
     private lateinit var binding : FragmentChartBinding
@@ -31,10 +36,9 @@ class ChartFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
-        initData()
         handleEvent()
     }
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     private fun handleEvent() {
         binding.btnphanloai.setOnClickListener {
             binding.viewDimBackground.visibility = View.VISIBLE
@@ -55,12 +59,26 @@ class ChartFragment : Fragment(){
 
         binding.recycleryear.layoutManager = LinearLayoutManager(requireContext().applicationContext)
         binding.recycleryear.adapter = com.example.managespending.date.YearAdapter()
+
+        binding.cbothunhap.setOnCheckedChangeListener { buttonView , isChecked -> updateFragment() }
+        binding.cbochitieu.setOnCheckedChangeListener { _, isChecked -> updateFragment() }
     }
-
-    private fun initData() {
-
+    private fun updateFragment() {
+        val viewPager = binding.viewChart
+        val isIncomeChecked = binding.cbothunhap.isChecked
+        val isExpendChecked = binding.cbochitieu.isChecked
+        val fragment = childFragmentManager.findFragmentByTag("f" + viewPager.currentItem)
+        if(fragment is BarFragment){
+            fragment.updateChartVisibility(isIncomeChecked, isExpendChecked)
+        }
+        else if(fragment is LineFragment){
+            fragment.updateChartVisibility(isIncomeChecked, isExpendChecked)
+        }
+        binding.btnok.setOnClickListener {
+            binding.layoutPL.visibility = View.GONE
+            binding.viewDimBackground.visibility = View.GONE
+        }
     }
-
     private fun setupView(){
         viewpagerAdapter = ViewPagerAdapter_Chart(this)
         binding.viewChart.adapter = viewpagerAdapter

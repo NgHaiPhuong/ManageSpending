@@ -11,7 +11,9 @@ import com.example.managespending.itemSpend
 import com.example.managespending.model.Category
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 
-class SpendController : EpoxyController() {
+class SpendController(
+    private val itemClickListener : (String, String , String) -> Unit
+) : EpoxyController() {
     var listCategory : MutableList<Category> = ArrayList()
         set(value) {
             field.clear()
@@ -19,6 +21,11 @@ class SpendController : EpoxyController() {
             field = value
             requestModelBuild()
         }
+
+    fun setList(list: MutableList<Category>){
+        listCategory.clear()
+        listCategory.addAll(list)
+    }
     override fun buildModels() {
         Carousel.setDefaultGlobalSnapHelperFactory(object : Carousel.SnapHelperFactory(){
             override fun buildSnapHelper(context: Context?): SnapHelper {
@@ -33,7 +40,7 @@ class SpendController : EpoxyController() {
                     url(item.icon)
                     name(item.name)
                     onClick(View.OnClickListener {
-
+                        this@SpendController.itemClickListener(item.icon, item.name, item.classify)
                     })
                     spanSizeOverride { totalSpanCount, position, itemCount ->
                         totalSpanCount

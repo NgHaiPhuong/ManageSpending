@@ -3,9 +3,13 @@ package com.example.managespending.presentation.insert
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.managespending.R
 import com.example.managespending.base.BaseActivity
@@ -29,7 +33,6 @@ import java.util.Calendar
 class InsertActivity : BaseActivity() {
     private lateinit var binding : ActivityInsertBinding
     private lateinit var myViewModel: MyViewModel
-    private lateinit var homeFragment : HomeFragment
     private lateinit var viewPagerAdapter: ViewPagerAdapter2
     private var tinhtoan = ""
     private var pheptinh = ""
@@ -38,17 +41,43 @@ class InsertActivity : BaseActivity() {
     private var kq : Float = 0F
     private var checkbang = false
     private var checkDot = false
+    var iconTrans : String = " "
+    var nameTrans : String = " "
+    var classifyTrans : String = " "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInsertBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_insert)
 
+        setupData()
         setupDatabase()
         setupView()
         handleEvent()
     }
+    fun setupData(){
+        val calender = Calendar.getInstance()
+        val year = calender.get(Calendar.YEAR)
+        val month = calender.get(Calendar.MONTH)
+        val day = calender.get(Calendar.DAY_OF_MONTH)
+        binding.tvdate.text = String.format("%d/%d/%d", day, month, year)
 
+        binding.name = "Car"
+
+        binding.calculation.visibility = View.GONE
+        val hour = calender.get(Calendar.HOUR)
+        val minute = calender.get(Calendar.MINUTE)
+        binding.tvhour.text = String.format("%d:%d", hour, minute)
+    }
+    fun displayData(icon: String, name: String, classify: String) {
+        iconTrans = icon
+        nameTrans = name
+        classifyTrans = classify
+
+        binding.url = icon
+        binding.name = name
+        binding.executePendingBindings()
+        iconTrans = icon
+    }
     private fun setupView() {
         viewPagerAdapter = ViewPagerAdapter2(this)
         binding.viewpager.adapter = viewPagerAdapter
@@ -98,26 +127,28 @@ class InsertActivity : BaseActivity() {
     }
 
     private fun saveTransaction(){
-        val bundle = Bundle()
-
         val name = binding.etname.text
         val date = binding.tvdate.text
         val time = binding.tvhour.text
         val note = binding.etnote.text
-        val icon = "spend/car.png"
+        val icon = iconTrans
         val background = binding.imgItem.circleBackgroundColor
         val cost = binding.tvnumber.text.toString().toFloat()
+        val classify = classifyTrans
 
-        CoroutineScope(Dispatchers.IO).launch {
-            myViewModel.addTransaction(
-                Transaction(0,name.toString(), icon, background.toString(), cost, "Spend", date.toString(), time.toString(), note.toString())
-            )
-            withContext(Dispatchers.Main){
-                homeFragment.arguments = bundle
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, homeFragment)
-                    .commit()
+        if(binding.tvnumber.text.isNotEmpty()){
+            CoroutineScope(Dispatchers.IO).launch {
+                myViewModel.addTransaction(
+                    Transaction(0,name.toString(), icon, background.toString(), cost, classify, date.toString(), time.toString(), note.toString())
+                )
+                withContext(Dispatchers.Main){
+                    val intent = Intent(this@InsertActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
+        }else{
+            Toast.makeText(this, "Request to enter money", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -309,51 +340,48 @@ class InsertActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun btnShowCanlender(view: View) {
         binding.calculation.visibility = View.GONE
         val calender = Calendar.getInstance()
         val year = calender.get(Calendar.YEAR)
-        val month = calender.get(Calendar.MONTH) + 1
+        val month = calender.get(Calendar.MONTH)
         val day = calender.get(Calendar.DAY_OF_MONTH)
+        binding.tvdate.text = String.format("%d/%d/%d", day, month + 1, year)
 
         val datePickerDialog = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             binding.tvdate.text = String.format("%d/%d/%d", dayOfMonth, month + 1, year)
         }, year, month, day)
         datePickerDialog.show()
+        datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).apply {
+            setTextColor(ContextCompat.getColor(this@InsertActivity, R.color.black))
+            text = "Cancel"
+        }
+        datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.black))
     }
 
+    @SuppressLint("SetTextI18n")
     fun btnShowOClock(view: View) {
         binding.calculation.visibility = View.GONE
         val calender = Calendar.getInstance()
         val hour = calender.get(Calendar.HOUR)
         val minute = calender.get(Calendar.MINUTE)
 
-        binding.tvhour.text = String.format("%d:%d", hour, minute)
-
-        TimePickerDialog(
-            this@InsertActivity,
-            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                binding.tvhour.text= String.format(" %d:%d", hourOfDay, minute).toString()
-            }, hour, minute, true
-        ).show()
-
-        /*val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             binding.tvhour.text= String.format(" %d:%d", hourOfDay, minute).toString()
         }, hour, minute, true)
-        timePickerDialog.show()*/
+        timePickerDialog.show()
+        timePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.black))
+        timePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).apply {
+            setTextColor(ContextCompat.getColor(this@InsertActivity, R.color.black))
+            text = "Cancel"
+        }
     }
 
     fun showList(view: View) {
         binding.layout.visibility = View.VISIBLE
         binding.calculation.visibility = View.GONE
         binding.viewDimBackground.visibility = View.VISIBLE
-    }
-
-    fun showManager(view: View) {
-        val categoryFragment = CategoryFragment()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, categoryFragment)
-            .commit()
     }
 
     fun showmain(view:View){

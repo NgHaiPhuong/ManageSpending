@@ -1,11 +1,14 @@
 package com.example.managespending.presentation.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.managespending.R
@@ -52,9 +55,9 @@ class DetailActivity : BaseActivity() {
             listTransaction = transactions.toMutableList()
         }
 
-        binding.tvname.text = intent.getStringExtra("name")
+        binding.tvname.setText(intent.getStringExtra("name"))
         val cost =  intent.getFloatExtra("cost", 0f)
-        binding.tvcost.text = FormatNumberUtil.format(cost)
+        binding.tvcost.setText(FormatNumberUtil.format(cost))
         binding.etcategory.setText(intent.getStringExtra("category"))
         binding.tvdate.text = intent.getStringExtra("date")
         binding.etnote.setText(intent.getStringExtra("note"))
@@ -68,26 +71,24 @@ class DetailActivity : BaseActivity() {
             finish()
         }
         binding.btnedit.setOnClickListener {
-            val name = binding.tvname.text.toString()
-            val cost = binding.tvcost.text.toString().toFloat()
-            val category = binding.etcategory.text.toString()
-            val date = binding.tvdate.text.toString()
-            val note = binding.etnote.text.toString()
-            val icon = "spend/electric.png"
-            val time = intent.getStringExtra("time").toString()
-
-            AlertDialog.Builder(this)
+            val alertDialog = AlertDialog.Builder(this)
                 .setTitle("Confirm update transaction")
                 .setMessage("Are you sure?")
                 .setPositiveButton("Yes"){dialog, which->
+                    val name = binding.tvname.text.toString()
+                    val cost = FormatNumberUtil.formatWithoutSeparators(binding.tvcost.text.toString())
+                    val category = binding.etcategory.text.toString()
+                    val date = binding.tvdate.text.toString()
+                    val note = binding.etnote.text.toString()
+                    val time = intent.getStringExtra("time").toString()
                     listTransaction.forEach {item->
                         if(item.id.equals(transactionId)){
                             item.name = name
-                            item.cost = cost
+                            item.cost = cost.toFloat()
                             item.category = category
                             item.date = date
                             item.note = note
-                            item.icon = icon
+                           // item.icon = item.icon
                             item.time = time
                         }
                     }
@@ -95,59 +96,80 @@ class DetailActivity : BaseActivity() {
                         myViewModel.deleteAllTransaction()
                         myViewModel.addAllTransaction(listTransaction)
                         withContext(Dispatchers.Main){
-                            val homeFragment =  HomeFragment()
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, homeFragment)
-                                .commit()
+                            val intent = Intent(this@DetailActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }
-                .setPositiveButton("No"){dialog, which->
+                .setNegativeButton("No"){dialog, which->
                     dialog.dismiss()
-                }
-                .show()
+                }.create()
+            alertDialog.show()
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
+                ContextCompat.getColor(this, R.color.black)
+            )
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
+                ContextCompat.getColor(this, R.color.black)
+            )
         }
         binding.imgdelete.setOnClickListener {
-            Log.d("DeleteTransaction", "Deleting transaction with id: $transactionId")
-            AlertDialog.Builder(this)
+            val alertDialog = AlertDialog.Builder(this)
                 .setTitle("Confirm delete transaction")
                 .setMessage("Are you sure?")
                 .setPositiveButton("Yes") { dialog, which ->
-                    listTransaction.forEach {item->
-                        if(item.id.equals(transactionId)){
-                            listTransaction.remove(item)
+                    val itemsToRemove = mutableListOf<Transaction>()
+                    listTransaction.forEach { item ->
+                        if (item.id == transactionId) {
+                            itemsToRemove.add(item)
                         }
                     }
-                    listTransaction.forEach {item->
-                        Log.d("DeleteTransaction", "Deleting transaction with id: ${item.name} + ${item.id}")
+                    listTransaction.removeAll(itemsToRemove)
+                    itemsToRemove.forEach { item ->
+                        Log.d(
+                            "DeleteTransaction",
+                            "Deleting transaction with id: ${item.name} + ${item.id}"
+                        )
                     }
                     CoroutineScope(Dispatchers.IO).launch {
                         myViewModel.deleteAllTransaction()
                         myViewModel.addAllTransaction(listTransaction)
-                        withContext(Dispatchers.Main){
-                            val homeFragment =  HomeFragment()
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, homeFragment)
-                                .commit()
+                        withContext(Dispatchers.Main) {
+                            val intent = Intent(this@DetailActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }
                 .setNegativeButton("No") { dialog, which ->
                     dialog.dismiss()
                 }
-                .show()
+                .create()
+            alertDialog.show()
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
+                ContextCompat.getColor(this, R.color.black)
+            )
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
+                ContextCompat.getColor(this, R.color.black)
+            )
         }
     }
 
+    @SuppressLint("DefaultLocale")
     fun btnShowCanlender(view: View) {
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH) + 1
+        val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
 
         val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             binding.tvdate.text = String.format("%d/%d/%d", dayOfMonth, month + 1, year)
         },  year, month, day)
         datePickerDialog.show()
+        datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE).apply {
+            setTextColor(ContextCompat.getColor(this@DetailActivity, R.color.black))
+            text = "Cancel"
+        }
+        datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.black))
     }
 }

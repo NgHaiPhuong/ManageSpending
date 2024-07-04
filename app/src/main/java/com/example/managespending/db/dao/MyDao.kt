@@ -21,8 +21,8 @@ interface MyDao {
     @Update
     suspend fun updateCategory(category: Category)
 
-    @Query("DELETE FROM category_table WHERE id = :categoryId")
-    suspend fun deleteCategoryById(categoryId: Int)
+    @Delete
+    suspend fun deleteCategory(category: Category)
 
     @Query("DELETE FROM category_table")
     fun deleteAllCategories()
@@ -39,8 +39,8 @@ interface MyDao {
     @Update
     suspend fun updateTransaction(transaction: Transaction)
 
-    @Query("DELETE FROM transaction_table WHERE id = :transactionId")
-    suspend fun deleteTransactionById(transactionId: Int)
+    @Delete
+    suspend fun deleteTransaction(transaction: Transaction)
 
     @Query("DELETE FROM transaction_table")
     suspend fun deleteAllTransaction()

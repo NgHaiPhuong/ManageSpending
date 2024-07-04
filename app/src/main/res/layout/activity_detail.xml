@@ -76,11 +76,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_alignParentStart="true"
                     bind:imageUrl="@{url}"
+                    android:padding="5dp"
                     android:contentDescription="@null"
                     android:background="@drawable/circle_background"
                     android:scaleType="centerCrop"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/tvname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,7 +93,7 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvcost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,6 +101,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="30dp"
                     android:text="10,000"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -115,6 +117,7 @@
                     android:id="@+id/imghour"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/phanloai" />
 
                 <TextView
@@ -135,7 +138,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="30dp"
-                    android:background="@null"
                     android:text="Spend"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -209,7 +211,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="30dp"
-                    android:background="@null"
                     android:text="No data"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
